@@ -1,68 +1,63 @@
 #include <iostream>
-#include<fstream>
-
-
+#include <string.h>
 using namespace std;
 
-bool checkVariable(string variable){
-
-if(variable.length()==0){
-
-    return false;
-}
-
-char first = variable[0];
-
-if(!((first>=97 && first <=122)||(first >=65 && first<=90)||(first ==95))){
-        //cout<<"variable invalid";
-        return false;
-    }
-
-for(int i=1; i<variable.length();i++){
-    char c = variable[i];
-
-    if(!((c >=97&& c<=122)||(c >=65 && c<=90)||(c ==95)||(c>=47 && c<=58))){
-        //cout<<"variable invalid"<<endl;
-        return false;
-    }
-
-}
-return true;
-
-}
-void isIdentifier(string word)
+bool isNumaric()    //task 1
 {
+    string c;
+    cin>>c;
+    for(int i=0;i<c.length();i++){
+        if(c[i]>=48 && c[i]<=57){
+            continue;
+        }
+        else
+            return false;
+    }
+    return true;
+}
 
-    string keywords[]= {"true","false","int", "float","namespace","class","cout","cin","return","main","bool","char","string","virtual","override","if","else","for","while","break","continue","switch","case","private","public"
+void isOperator()       //task 2
+{
+    string input;
+    cin>>input;
+    int count = 0;
 
-    };
-    int total =sizeof(keywords)/sizeof(keywords[0]);
-    for(int i=0; i<total;i++){
-        if (word == keywords[i]){
-        cout<<word<<" :not identifier(keyword)"<<endl;
-        return;
+    for(int i=0; i<input.length();i++){
+        char c = input[i];
+        if(c == '+' || c == '-' || c == '*' || c == '/' || c == '%' || c == '='){
+            count++;
+            cout<<"Operator "<<count<<": "<<c<<endl;
         }
     }
-    if (checkVariable(word)) {
-        cout <<word<<" :Valid identifier" << endl;
-    } else {
-        cout <<word<<" :Not a valid identifier" << endl;
-    }
-
+    if(count == 0)
+        cout<<"No Operator"<<endl;
 }
-int main(){
+void checkComment()         //task 3
+{
 
-    ifstream fin("identifier.txt");
-    string line;
-
-    while(getline(fin, line)){
-          if(line.empty()){
-            continue;
-          }
-
-        isIdentifier(line);
+    string str;
+    cin.ignore();
+    getline(cin, str);
+    if (str.size() >= 2 && str[0] == '/' && str[1] == '/') {
+        cout << "It is a single-line comment." << endl;
     }
-
-return 0;
+    else if (str.size() >= 4 && str[0] == '/' && str[1] == '*' && str[str.size() - 2] == '*' && str[str.size() - 1] == '/') {
+        cout << "It is a multi-line comment." << endl;
+    }
+    else {
+        cout << "It is not a comment." << endl;
+    }
 }
 
+int main()
+{
+    cout<<"Enter Input to check numeric: "<<isNumaric()<<endl;
+
+    cout<<"Enter a Input to check operators :";
+    isOperator();
+
+    cout << "Enter a string to check note type: ";
+    checkComment();
+
+    return 0;
+}
