@@ -1,0 +1,10 @@
+m x
+5yv
+identity
+cout
+protected
+private
+a
+project
+viewDetails
+@data
